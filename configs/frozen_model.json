@@ -1,0 +1,188 @@
+{
+  "seed": 0,
+  "status": "frozen before any fit",
+  "datasets": [
+    "GVLM_v1_0",
+    "GVLM_v1_1",
+    "CAS",
+    "jz",
+    "bijie"
+  ],
+  "points": [
+    "P1",
+    "P2"
+  ],
+  "features": [
+    "sam",
+    "stab",
+    "aratio",
+    "comp",
+    "dcent",
+    "br",
+    "sat",
+    "sob",
+    "grad",
+    "logarea",
+    "arank",
+    "logscale",
+    "ar",
+    "xscale_iou"
+  ],
+  "single_scale_features": [
+    "sam",
+    "stab",
+    "aratio",
+    "comp",
+    "dcent",
+    "br",
+    "sat",
+    "sob",
+    "grad",
+    "logarea",
+    "arank",
+    "logscale",
+    "ar"
+  ],
+  "gbt_params": {
+    "categorical_features": "from_dtype",
+    "early_stopping": "auto",
+    "interaction_cst": null,
+    "l2_regularization": 0.0,
+    "learning_rate": 0.05,
+    "loss": "squared_error",
+    "max_bins": 255,
+    "max_depth": null,
+    "max_features": 1.0,
+    "max_iter": 200,
+    "max_leaf_nodes": 31,
+    "min_samples_leaf": 20,
+    "monotonic_cst": null,
+    "n_iter_no_change": 10,
+    "quantile": null,
+    "random_state": 0,
+    "scoring": "loss",
+    "tol": 1e-07,
+    "validation_fraction": 0.1,
+    "verbose": 0,
+    "warm_start": false
+  },
+  "threads": 4,
+  "sam": {
+    "checkpoint": "checkpoints/sam2.1_hiera_large.pt",
+    "config": "configs/sam2.1/sam2.1_hiera_l.yaml",
+    "multimask_output": true,
+    "return_logits": true,
+    "precision": "CUDA autocast bfloat16, returned/interpolated logits float32",
+    "batch_size": 1,
+    "apply_postprocessing": "build_sam2 default",
+    "mask_threshold": 0.0
+  },
+  "weights": {
+    "order": [
+      "unweighted",
+      "sqrt",
+      "area"
+    ],
+    "area": "m2/.59**2; GVLM_v1_0 exact native pixels",
+    "jz": "native pixel area; GSD undocumented, explicitly reported; same-dataset constant scale only",
+    "gbt": "raw weights as v4",
+    "neural_loss": "sum(w * squared_error)/sum(w) in each minibatch"
+  },
+  "neural": {
+    "optimizer": "AdamW",
+    "lr": 0.0001,
+    "weight_decay": 0.0001,
+    "betas": [
+      0.9,
+      0.999
+    ],
+    "eps": 1e-08,
+    "batch_size": 256,
+    "epochs": 30,
+    "precision": "float32",
+    "shuffle": "torch CPU Generator seed0, new randperm each epoch",
+    "last_epoch": true,
+    "early_stopping": false,
+    "head": "SAM original 256->256->256->4, ReLU between layers, original configured output activation; keep weights; candidates use output channels1..3",
+    "hybrid": "Linear(256+F,256),ReLU,Dropout(.1),Linear(256,1); two Linear layers; random torch seed0 initialization",
+    "manual_preprocessing": "replace nonfinite with train-only per-column median (all missing=>0); train-only mean/std (std0=>1); token raw; fit separately within every training split",
+    "no_candidate_id_feature": true,
+    "target": "cached full queried-object IoU; robust targets retained at cached8decimal precision"
+  },
+  "nested": {
+    "grouped": "inner leave-one-region/event out within outer training; aggregate TP and union over all inner-held units and BOTH P1/P2 before selecting weight",
+    "external": "reuse full17-region validation for v1.1; no v1.1 training",
+    "tiles": "train fit, val compare joint P1P2; final fit train+val",
+    "ties": "strict numerical maximum; exactly tied follow unweighted,sqrt,area order",
+    "fit_memoization": "same dataset/method/weight/sorted training units => identical seed0 fit; reuse irrespective of outer fold; never use held targets in fit",
+    "refit": "fresh seed0 initialization on full outer training",
+    "each_model_independent": true
+  },
+  "baselines": {
+    "R0": "argmax SAM original scores over all available12 or3 candidates",
+    "fixed_pool": "multiscale16 rules: scale ascending,R0/R1/R2/R3; single4 rules",
+    "training_best": "joint P1/P2 wholeIoU best among fixed rules using complete final outer training data; tiesfirst; same reference for all three models",
+    "posthoc": "choose separately per reported metric on evaluated test view, hold rule fixed during bootstrap; actual unavailable",
+    "upper": "GT per-query argmax, not deployable or global union optimum",
+    "box": "reuse existing; jz/bijie missing boxes generated once on full tile, tight user-simulated GT bbox, multimask=False; robust FP32 input path"
+  },
+  "bootstrap": {
+    "repeats": 1000,
+    "seed": 0,
+    "percentiles": [
+      2.5,
+      97.5
+    ],
+    "paired": true,
+    "GVLM": "region/event",
+    "CAS": [
+      "event",
+      "tile"
+    ],
+    "jz_bijie": "tile",
+    "victory": "unit or event wholeIoU delta with tolerance1e-12"
+  },
+  "interaction": {
+    "models": [
+      "gbt",
+      "head",
+      "hybrid"
+    ],
+    "k_percent": [
+      0,
+      10,
+      20,
+      30,
+      40,
+      50,
+      60,
+      70,
+      80,
+      90,
+      100
+    ],
+    "count": "floor(N*k/100)",
+    "orders": [
+      "predicted_area",
+      "confidence",
+      "random"
+    ],
+    "area": "predicted m2; jz native pixels",
+    "confidence": "raw selected predicted IoU; no calibration/clipping",
+    "ties": "stable sorted(unit,obj_idx)",
+    "random": "20 nested permutations default_rng(seeds0..19), shared across models/P1P2 withinview",
+    "target": "0.9*full box wholeIoU; minimum tested k; random20mean; no interpolation",
+    "random_interval": "2.5/97.5 percentile across20 allocations"
+  },
+  "scope": {
+    "GVLM_v1_1_main": "six excluding Saint; all7 appendix; predictions same, allocation recomputed eachview",
+    "CAS": "same existing1500 sampled tiles, all resolutions grouped together",
+    "jz_bijie": "eligible prompted tiles as robust; supplement missing val with same>=100 component and common split rules; no negative-only tiles in unit mean"
+  },
+  "single_scale_logscale": {
+    "CAS": "cached log2(512*README_GSD/.59)",
+    "bijie": "log2(max(tile_height,tile_width)*.8/.59)",
+    "jz": "log2(max(tile_height,tile_width)); native pixel scale due to unknown GSD"
+  },
+  "frozen_at_utc": "2026-10-14T13:24:19.227323+00:00"
+}

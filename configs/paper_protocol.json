@@ -1,0 +1,15 @@
+{
+  "main_bootstrap_repeats": 10000,
+  "bootstrap_seed": 0,
+  "figure3c_bootstrap_repeats": 1000,
+  "percentiles": [
+    2.5,
+    97.5
+  ],
+  "scene_candidates": 12,
+  "scene_features": 14,
+  "tile_candidates": 3,
+  "tile_features": 13,
+  "model_seed": 0,
+  "source": "Manuscript blocks 62,99,108,135; Online Resource 1 pp.1,17,18"
+}

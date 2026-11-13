@@ -1,0 +1,12 @@
+.venv/
+__pycache__/
+*.pyc
+outputs/
+data/
+checkpoints/
+*.npz
+*.npy
+*.pt
+*.pth
+*.joblib
+*.zip

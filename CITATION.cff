@@ -1,0 +1,30 @@
+cff-version: 1.2.0
+message: "Please cite the accompanying manuscript when using this software."
+type: software
+title: "How good is one click? Realistic evaluation and learned mask selection for landslide delineation with the Segment Anything Model"
+version: 0.1.0
+authors:
+  - family-names: Gao
+    given-names: Zhaoyang
+  - family-names: Mo
+    given-names: Xinyue
+  - family-names: Li
+    given-names: Huan
+  - family-names: Feng
+    given-names: Mingshan
+license: MIT
+doi: MISSING
+preferred-citation:
+  type: article
+  title: "How good is one click? Realistic evaluation and learned mask selection for landslide delineation with the Segment Anything Model"
+  authors:
+    - family-names: Gao
+      given-names: Zhaoyang
+    - family-names: Mo
+      given-names: Xinyue
+    - family-names: Li
+      given-names: Huan
+    - family-names: Feng
+      given-names: Mingshan
+  journal: MISSING
+  doi: MISSING
