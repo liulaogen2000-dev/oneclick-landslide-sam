@@ -2,7 +2,7 @@
 
 Code and frozen intermediate results for **How good is one click? Realistic evaluation and learned mask selection for landslide delineation with the Segment Anything Model**. The selector learns from previous inventories and chooses a mask for a located landslide from one positive click. SAM 2.1 Hiera-Large stays frozen. Reference masks enter training targets and evaluation, not candidate generation or deployment.
 
-This is a local release candidate for a submission to *Computers & Geosciences*. Repository URL, journal record and DOI: **MISSING**. The manuscript, embedded figures, source imagery and source label rasters are not included.
+Code repository: [oneclick-landslide-sam](https://github.com/liulaogen2000-dev/oneclick-landslide-sam). Companion data DOI: [10.5281/zenodo.24214459](https://doi.org/10.5281/zenodo.24214459). Paper journal and paper DOI: **MISSING**. The manuscript, embedded figures, source imagery and source label rasters are not included.
 
 ## Install
 
@@ -23,7 +23,7 @@ The paper's experiments used an NVIDIA GeForce RTX 4090 with 24 GB of GPU memory
 
 ## Reproduce the main results
 
-Place the accompanying data directory beside this repository as `../zenodo/`. Its public DOI is **MISSING**; it is currently prepared locally. All paths below are relative. Check its payload first:
+Download `oneclick_landslide_sam_data.zip` from [Zenodo DOI 10.5281/zenodo.24214459](https://doi.org/10.5281/zenodo.24214459), and extract its contents into `../zenodo/` beside this repository. The authors' derived data and anonymous annotation records are licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/); source datasets and SAM-derived weights retain their own terms. All paths below are relative. Check the payload first:
 
 ```bash
 ../verification/venv/bin/python scripts/verify_package.py --data ../zenodo
@@ -121,4 +121,4 @@ Download imagery and labels from their official sources. They are not redistribu
 
 `landslide_sam/` contains candidate generation, features, GBT selection, correction and evaluation; `experiments/` contains neural variants and training-only selection; `scripts/` contains reproduction and integrity commands; `examples/` contains the image-and-click interface; `configs/` stores frozen model settings and manuscript targets; `docs/` contains the tutorial and source provenance. Models, feature tensors, tokens and frozen counts belong in the data package and are ignored by Git. Every tracked file must be smaller than 50 MB.
 
-Cite the manuscript title and authors in [CITATION.cff](CITATION.cff). Journal, DOI and public code/data URLs remain **MISSING** until publication. Code is MIT licensed to Zhaoyang Gao, Xinyue Mo, Huan Li and Mingshan Feng. SAM and external datasets retain their own terms.
+Cite the manuscript title and authors in [CITATION.cff](CITATION.cff). The paper journal and paper DOI remain **MISSING** until publication. The [code repository](https://github.com/liulaogen2000-dev/oneclick-landslide-sam) is MIT licensed to Zhaoyang Gao, Xinyue Mo, Huan Li and Mingshan Feng. The authors' derived data and anonymous annotation records are available at [DOI 10.5281/zenodo.24214459](https://doi.org/10.5281/zenodo.24214459) under CC BY 4.0. SAM and external datasets retain their own terms.

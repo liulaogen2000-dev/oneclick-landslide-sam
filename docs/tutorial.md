@@ -1,6 +1,6 @@
 # Tutorial
 
-1. Create the Python 3.11 environment and install the pinned CPU requirements using the README commands. Keep the repository and the data package as sibling directories.
+1. Obtain the [code repository](https://github.com/liulaogen2000-dev/oneclick-landslide-sam), create the Python 3.11 environment and install the pinned CPU requirements using the README commands. Download `oneclick_landslide_sam_data.zip` from [DOI 10.5281/zenodo.24214459](https://doi.org/10.5281/zenodo.24214459) and extract its contents into `../zenodo/`. The code is MIT licensed; the authors' derived data and anonymous annotation records are CC BY 4.0. Keep the repository and the data package as sibling directories.
 2. Run `scripts/verify_package.py`. Resolve a checksum failure before reading results.
 3. Run `scripts/reproduce.py all` into a new output directory. Read every row of `comparison.csv`; its manuscript location identifies the table row or prose claim. A failed row stops the run.
 4. For a new image, install the optional GPU requirements and obtain SAM 2.1 Hiera-Large from its official release. Use the original dataset's GSD and matching 13- or 14-feature selector.

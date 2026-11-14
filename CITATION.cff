@@ -14,6 +14,14 @@ authors:
     given-names: Mingshan
 license: MIT
 doi: MISSING
+repository-code: https://github.com/liulaogen2000-dev/oneclick-landslide-sam
+url: https://github.com/liulaogen2000-dev/oneclick-landslide-sam
+references:
+  - type: data
+    title: "Companion data for How good is one click? Realistic evaluation and learned mask selection for landslide delineation with the Segment Anything Model"
+    doi: 10.5281/zenodo.24214459
+    url: https://doi.org/10.5281/zenodo.24214459
+    license: CC-BY-4.0
 preferred-citation:
   type: article
   title: "How good is one click? Realistic evaluation and learned mask selection for landslide delineation with the Segment Anything Model"
