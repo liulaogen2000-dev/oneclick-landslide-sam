@@ -19,7 +19,7 @@ The CPU requirements are pinned to the recorded environment. Do not replace unav
 ../verification/venv/bin/python -m pip install -r requirements-gpu.txt
 ```
 
-The original experiments used an NVIDIA GeForce RTX 4090, PyTorch 2.8.0, CUDA 12.8 and four CPU threads. Minimum GPU memory, peak GPU memory and peak host memory for SAM inference: **MISSING**. A GPU is required for the preserved SAM inference path and both neural training variants. Recomputing the tables from frozen statistics uses the CPU and does not load SAM. Availability and validation of the current release are recorded in the accompanying `VERIFICATION.md`; absent GPU tests are not presented as completed.
+The paper's experiments used an NVIDIA GeForce RTX 4090 with 24 GB of GPU memory, PyTorch 2.8.0, CUDA 12.8 and four CPU threads. CPU reproduction of the tables and reported numerical results from frozen intermediate results has been verified; see the accompanying `VERIFICATION.md`. The SAM inference examples and neural selector variants require a CUDA GPU. These GPU paths use the paper's experimental code and were not rerun in a new environment for this release.
 
 ## Reproduce the main results
 
